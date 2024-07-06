@@ -14,7 +14,7 @@ class Menu extends Model
         'deskripsi_menu',
         'harga_menu',
         'foto',
-        'merchant_id', // Tambahkan merchant_id ke dalam $fillable
+        'merchant_id', 
     ];
 
     public function merchant()

@@ -76,11 +76,12 @@ class MerchantController extends Controller
         ]);
 
         $merchant = Merchant::find($id);
-        $merchant->nama_merchant = $request->nama_merchant;
-        $merchant->alamat_merchant = $request->alamat_merchant;
-        $merchant->kontak = $request->kontak;
-        $merchant->deskripsi = $request->deskripsi;
-        $merchant->save();
+        $merchant->update([
+            'nama_merchant' => $request->nama_merchant,
+            'alamat_merchant' => $request->alamat_merchant,
+            'kontak' => $request->kontak,
+            'deskripsi' => $request->deskripsi,
+        ]);
 
         return redirect()->route('merchant.index');
     }

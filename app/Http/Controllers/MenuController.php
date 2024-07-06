@@ -36,7 +36,7 @@ class MenuController extends Controller
             'deskripsi_menu' => 'required',
             'harga_menu' => 'required',
             'foto'  => 'required',
-            'merchant_id' => 'required' // Validasi untuk merchant_id
+            'merchant_id' => 'required'
         ]);
 
         Menu::create([
@@ -44,7 +44,7 @@ class MenuController extends Controller
             'deskripsi_menu' => $request->deskripsi_menu,
             'harga_menu' => $request->harga_menu,
             'foto' => $request->foto,
-            'merchant_id' => $request->merchant_id // Simpan merchant_id
+            'merchant_id' => $request->merchant_id 
         ]);
 
         return redirect()->route('menu.index');
@@ -70,7 +70,7 @@ class MenuController extends Controller
             'deskripsi_menu' => 'required',
             'harga_menu' => 'required',
             'foto'  => 'required',
-            'merchant_id' => 'required' // Validasi untuk merchant_id
+            'merchant_id' => 'required' 
         ]);
 
         $menu = Menu::find($id);
@@ -79,9 +79,9 @@ class MenuController extends Controller
             'deskripsi_menu' => $request->deskripsi_menu,
             'harga_menu' => $request->harga_menu,
             'foto' => $request->foto,
-            'merchant_id' => $request->merchant_id // Simpan merchant_id
+            'merchant_id' => $request->merchant_id 
         ]);
-        return redirect()->route('menu.index')->with('success', 'Menu berhasil diubah');
+        return redirect()->route('menu.index');
     }
 
     /**

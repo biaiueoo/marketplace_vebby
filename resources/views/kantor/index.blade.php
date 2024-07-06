@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1>Kantor List</h1>
+    <h1>Daftar Kantor</h1>
     <a href="{{ route('kantor.create') }}" class="btn btn-primary">Tambahkan Kantor</a>
     <table class="table">
         <thead>

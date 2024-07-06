@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1>Create Pembelian</h1>
+    <h1>Tambah Pembelian</h1>
     <form method="POST" action="{{ route('pembelian.store') }}">
         @csrf
         <div class="form-group">
@@ -33,30 +33,26 @@
             <label for="total_harga">Total Harga</label>
             <input type="text" class="form-control" id="total_harga" name="total_harga" readonly>
         </div>
-        <button type="submit" class="btn btn-primary">Create</button>
+        <button type="submit" class="btn btn-primary">Tambah Pembelian</button>
     </form>
 @endsection
 
 @section('scripts')
     <script>
-        // Fungsi untuk menghitung total harga
-        function calculateTotal() {
+        
+        function ftotal() {
             var menuId = document.getElementById('menu_id').value;
             var jumlahPorsi = document.getElementById('jumlah_porsi').value;
             var hargaPerPorsi = document.getElementById('menu_id').options[document.getElementById('menu_id').selectedIndex].getAttribute('harga_menu');
             
-            // Menghitung total harga
             var totalHarga = parseFloat(hargaPerPorsi) * parseInt(jumlahPorsi);
 
-            // Memasukkan hasil perhitungan ke dalam input total_harga
             document.getElementById('total_harga').value = totalHarga;
         }
 
-        // Event listener untuk menangkap perubahan pada input menu_id dan jumlah_porsi
-        document.getElementById('menu_id').addEventListener('change', calculateTotal);
-        document.getElementById('jumlah_porsi').addEventListener('input', calculateTotal);
+        document.getElementById('menu_id').addEventListener('change', ftotal);
+        document.getElementById('jumlah_porsi').addEventListener('input', ftotal);
 
-        // Panggil fungsi pertama kali untuk inisialisasi nilai
-        calculateTotal();
+        ftotal();
     </script>
 @endsection

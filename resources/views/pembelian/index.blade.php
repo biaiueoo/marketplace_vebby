@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1>Pembelian</h1>
+    <h1>Daftar Pembelian</h1>
     <a href="{{ route('pembelian.create') }}" class="btn btn-primary">Tambah merchant Baru</a>
-    <table class="table table-striped">
+    <table class="table">
         <thead>
             <tr>
                 <th>Kantor ID</th>
@@ -16,8 +16,8 @@
         <tbody>
             @foreach($pembelians as $pembelian)
                 <tr>
-                    <td>{{ $pembelian->kantor_id }}</td>
-                    <td>{{ $pembelian->menu_id }}</td>
+                    <td>{{ $pembelian->kantor->nama_kantor }}</td>
+                    <td>{{ $pembelian->menu->nama_menu }}</td>
                     <td>{{ $pembelian->jumlah_porsi }}</td>
                     <td>{{ $pembelian->tanggal_pengiriman }}</td>
                     <td>

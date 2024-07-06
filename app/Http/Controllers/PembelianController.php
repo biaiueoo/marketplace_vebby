@@ -23,11 +23,11 @@ class PembelianController extends Controller
      * Show the form for creating a new resource.
      */
     public function create()
-{
-    $kantors = Kantor::all(); // Ambil data kantor
-    $menus = Menu::all(); // Ambil data menu
-    return view('pembelian.create', compact('kantors', 'menus'));
-}
+    {
+        $kantors = Kantor::all(); // Ambil data kantor
+        $menus = Menu::all(); // Ambil data menu
+        return view('pembelian.create', compact('kantors', 'menus'));
+    }
 
 
 
@@ -35,32 +35,31 @@ class PembelianController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-{
-    $request->validate([
-        'kantor_id' => 'required',
-        'menu_id' => 'required',
-        'jumlah_porsi' => 'required|numeric',
-        'total_harga' => 'required', // Pastikan total harga disertakan dalam validasi
-        'tanggal_pengiriman' => 'required|date',
-    ]);
+    {
+        $request->validate([
+            'kantor_id' => 'required',
+            'menu_id' => 'required',
+            'jumlah_porsi' => 'required|numeric',
+            'total_harga' => 'required',
+            'tanggal_pengiriman' => 'required|date',
+        ]);
 
-    // Proses penyimpanan pembelian
-    $pembelian = new Pembelian;
-    $pembelian->kantor_id = $request->kantor_id;
-    $pembelian->menu_id = $request->menu_id;
-    $pembelian->jumlah_porsi = $request->jumlah_porsi;
-    $pembelian->total_harga = $request->total_harga; // Simpan total harga yang dihitung sebelumnya
-    $pembelian->tanggal_pengiriman = $request->tanggal_pengiriman;
-    $pembelian->save();
+        $pembelian = Pembelian::create([
+            'kantor_id' => $request->kantor_id,
+            'menu_id' => $request->menu_id,
+            'jumlah_porsi' => $request->jumlah_porsi,
+            'total_harga' => $request->total_harga,
+            'tanggal_pengiriman' => $request->tanggal_pengiriman
+        ]);
 
-    // Generate Invoice
-    $invoice = new Invoice;
-    $invoice->pembelian_id = $pembelian->id;
-    $invoice->total_harga = $request->total_harga; // Simpan total harga yang dihitung sebelumnya
-    $invoice->save();
+        $invoice = Invoice::create([
+            'pembelian_id' => $request->id,
+            'total_harga' => $request->total_harga,
+        ]);
 
-    return response()->json(['pembelian' => $pembelian, 'invoice' => $invoice]);
-}
+
+        return response()->json(['pembelian' => $pembelian, 'invoice' => $invoice]);
+    }
 
 
 
@@ -75,9 +74,13 @@ class PembelianController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
+    
     public function edit(string $id)
     {
-        //
+        $pembelian = Pembelian::find($id);
+        $kantors = Kantor::all();
+        $menus = Menu::all();
+        return view('pembelian.edit', compact('pembelian', 'kantors', 'menus'));
     }
 
     /**
@@ -85,7 +88,29 @@ class PembelianController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $pembelian = Pembelian::find($id);
+        $request->validate([
+            'kantor_id' => 'required',
+            'enu_id' => 'required',
+            'jumlah_porsi' => 'required|numeric',
+            'total_harga' => 'required',
+            'tanggal_pengiriman' => 'required|date',
+        ]);
+
+        $pembelian->update([
+            'kantor_id' => $request->kantor_id,
+            'enu_id' => $request->menu_id,
+            'jumlah_porsi' => $request->jumlah_porsi,
+            'total_harga' => $request->total_harga,
+            'tanggal_pengiriman' => $request->tanggal_pengiriman,
+        ]);
+
+        $invoice = $pembelian->invoice;
+        $invoice->update([
+            'total_harga' => $request->total_harga,
+        ]);
+
+        return response()->json(['pembelian' => $pembelian, 'invoice' => $invoice]);
     }
 
     /**

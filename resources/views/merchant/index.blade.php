@@ -2,7 +2,7 @@
 
 @section('content')
     
-    <h1>List of Merchant</h1>
+    <h1>Daftar Merchant</h1>
     <a href="{{ route('merchant.create') }}" class="btn btn-primary">Tambah merchant Baru</a>
     <table class="table">
         <thead>

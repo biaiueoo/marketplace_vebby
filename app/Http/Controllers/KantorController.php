@@ -73,10 +73,11 @@ class KantorController extends Controller
         ]);
 
         $kantor = Kantor::find($id);
-        $kantor->nama_kantor = $request->nama_kantor;
-        $kantor->alamat_kantor = $request->alamat_kantor;
-        $kantor->telp_kantor = $request->telp_kantor;
-        $kantor->save();
+        $kantor->update([
+            'nama_kantor' => $request->nama_kantor,
+            'alamat_kantor' => $request->alamat_kantor,
+            'telp_kantor' => $request->telp_kantor,
+        ]);
 
         return redirect()->route('kantor.index');
     }
